@@ -1,0 +1,12 @@
+#!/bin/bash
+
+flavor=prod
+port=5000
+workers=4
+
+if [[ ! -z $1 ]]; then flavor=$1; fi
+if [[ ! -z $2 ]]; then port=$2; fi
+if [[ ! -z $3 ]]; then workers=$3; fi
+
+cd /opt/docker-registry
+SETTINGS_FLAVOR=$flavor gunicorn --access-logfile - --debug -k gevent -b 0.0.0.0:$port -w $workers wsgi:application

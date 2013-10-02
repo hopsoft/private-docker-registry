@@ -1,0 +1,3 @@
+.vagrant
+assets/config.yml
+assets/nginx.conf
