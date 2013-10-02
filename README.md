@@ -1,6 +1,6 @@
 # Private Docker Registry
 
-A project to help you build a private docker registry image.
+A project to help you build a private docker-registry image.
 
 * [http://blog.docker.io/2013/07/how-to-use-your-own-registry/](http://blog.docker.io/2013/07/how-to-use-your-own-registry/)
 * [https://github.com/dotcloud/docker-registry/tree/0.5.9](https://github.com/dotcloud/docker-registry/tree/0.5.9)
