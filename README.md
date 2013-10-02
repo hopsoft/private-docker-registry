@@ -8,7 +8,7 @@ A project to help you build a private docker registry image.
 #### Get the project
 
 ```
-git clone ?
+git clone https://github.com/hopsoft/private-docker-registry.git
 cd private-docker-registry
 ```
 
