@@ -35,7 +35,7 @@ docker build -t hopsoft/docker-registry /vagrant
 docker run -d -p 5000:5000 hopsoft/docker-registry /opt/private-docker-registry/start
 ```
 
-#### Start Nginx to reverse proxy to the regreistry
+#### Start Nginx to reverse proxy to the registry
 
 ```
 /etc/init.d/nginx start
