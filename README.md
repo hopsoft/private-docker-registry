@@ -41,7 +41,7 @@ docker run -d -p 5000:5000 hopsoft/docker-registry /opt/private-docker-registry/
 /etc/init.d/nginx start
 ```
 
-_Have a look at `/etc/nginx/conf.d/docker.conf` to check out the config._
+You can see the nginx config [here](https://github.com/hopsoft/private-docker-registry/blob/master/provision).
 
 #### Create an image
 
