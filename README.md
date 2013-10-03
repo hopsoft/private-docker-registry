@@ -50,13 +50,13 @@ exit
 docker images | grep ubuntu | grep latest
 ```
 
-#### Tag the image into the private repo
+#### Tag the image into the private registry
 
 ```
 docker tag 327db2da537e localhost:5000/hello
 ```
 
-#### Push an image
+#### Push the image to the private registry
 
 ```
 docker push localhost:5000/hello
