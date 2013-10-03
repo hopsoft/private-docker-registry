@@ -64,3 +64,16 @@ docker commit 327db2da537e localhost:80/hello
 docker push localhost:80/hello
 ```
 
+#### Interact with the registry via the API
+
+```
+curl http://localhost/v1/repositories/hello/images
+curl http://localhost/v1/images/8dbd9e392a964056420e5d58ca5cc376ef18e2de93b5cc90e868a1bbc8318c1c/json
+curl http://localhost/v1/repositories/hello/tags
+curl -X DELETE http://localhost/v1/repositories/hello
+```
+
+Read more about the API [here](http://docs.docker.io/en/latest/api/registry_index_spec/).
+
+_Note: Delete repository doesn't seem to work._
+
