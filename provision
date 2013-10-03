@@ -2,6 +2,71 @@
 set -e
 
 export DEBIAN_FRONTEND=noninteractive
+echo deb http://archive.ubuntu.com/ubuntu $(lsb_release -cs) main universe > /etc/apt/sources.list.d/universe.list
 echo deb http://get.docker.io/ubuntu docker main > /etc/apt/sources.list.d/docker.list
 apt-get -qq update
 apt-get -y --force-yes install lxc-docker
+apt-get -y --force-yes install nginx-extras
+
+rm -f /etc/nginx/sites-enabled/default
+
+cat << 'EOF' > /etc/nginx/nginx.conf
+user www-data;
+worker_processes 4;
+pid /var/run/nginx.pid;
+
+events {
+	worker_connections 768;
+}
+
+http {
+	sendfile on;
+	tcp_nopush on;
+	tcp_nodelay on;
+	keepalive_timeout 65;
+	types_hash_max_size 2048;
+	include /etc/nginx/mime.types;
+	default_type application/octet-stream;
+	access_log /var/log/nginx/access.log;
+	error_log /var/log/nginx/error.log;
+	gzip on;
+	gzip_disable "msie6";
+	include /etc/nginx/conf.d/*.conf;
+	include /etc/nginx/sites-enabled/*;
+}
+EOF
+
+cat << 'EOF' > /etc/nginx/conf.d/docker.conf
+upstream docker_registry {
+  server 127.0.0.1:5000;
+}
+
+server {
+  listen   80;
+  server_name localhost;
+  root /dev/null;
+  index index.html index.htm;
+  client_max_body_size 600M;
+
+  gzip             on;
+  gzip_min_length  1000;
+  gzip_proxied     expired no-cache no-store private auth;
+  gzip_types       application/json application/xml text/plain text/html;
+
+  chunkin on;
+  chunkin_keepalive on;
+
+  error_page 411 = @content_length_error;
+  location @content_length_error {
+    chunkin_resume;
+  }
+
+  location / {
+    #auth_basic "Restricted";
+    #auth_basic_user_file htpasswd;
+    proxy_pass  http://docker_registry;
+    proxy_set_header Host $http_host;
+    proxy_read_timeout 900;
+  }
+}
+EOF

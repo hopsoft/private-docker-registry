@@ -26,7 +26,7 @@ vim assets/config.yml
 vagrant up
 vagrant ssh
 sudo su -
-docker build -t hopsoft/docker-registry /vagrant/private-docker-registry
+docker build -t hopsoft/docker-registry /vagrant
 ```
 
 #### Run the registry
@@ -35,11 +35,13 @@ docker build -t hopsoft/docker-registry /vagrant/private-docker-registry
 docker run -d -p 5000:5000 hopsoft/docker-registry /opt/private-docker-registry/start
 ```
 
-#### Login to the registry
+#### Start Nginx to reverse proxy to the regreistry
 
 ```
-docker login localhost:5000
+/etc/init.d/nginx start
 ```
+
+_Have a look at `/etc/nginx/conf.d/docker.conf` to check out the config._
 
 #### Create an image
 
@@ -47,18 +49,18 @@ docker login localhost:5000
 docker run -i -t ubuntu bash
 apt-get install hello
 exit
-docker images | grep ubuntu | grep latest
 ```
 
 #### Tag the image into the private registry
 
 ```
-docker tag 327db2da537e localhost:5000/hello
+docker ps -a | grep ubuntu
+docker commit 327db2da537e localhost:80/hello
 ```
 
 #### Push the image to the private registry
 
 ```
-docker push localhost:5000/hello
+docker push localhost:80/hello
 ```
 
