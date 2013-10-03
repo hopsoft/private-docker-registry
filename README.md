@@ -12,7 +12,7 @@ git clone https://github.com/hopsoft/private-docker-registry.git
 cd private-docker-registry
 ```
 
-#### Add your configuration
+#### Add your Docker registry configuration to assets
 
 An example: https://github.com/dotcloud/docker-registry/blob/0.5.9/config_sample.yml
 
