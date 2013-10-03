@@ -25,24 +25,40 @@ vim assets/config.yml
 ```
 vagrant up
 vagrant ssh
-sudo docker build -t USERNAME/docker-registry /path/to/private-docker-registry
+sudo su -
+docker build -t hopsoft/docker-registry /path/to/private-docker-registry
 ```
 
 #### Run the registry
 
 ```
-sudo docker run -d -p 5000:5000 /opt/private-docker-registry/start
+docker run -d -p 5000:5000 hopsoft/docker-registry /opt/private-docker-registry/start
 ```
 
-#### Tag an image
+#### Login to the registry
 
 ```
-sudo docker tag 327db2da537e localhost:5000/example
+docker login localhost:5000
+```
+
+#### Create an image
+
+```
+docker run -i -t ubuntu bash
+apt-get install hello
+exit
+docker images | grep ubuntu | grep latest
+```
+
+#### Tag the image into the private repo
+
+```
+docker tag 327db2da537e localhost:5000/hello
 ```
 
 #### Push an image
 
 ```
-sudo docker push localhost:5000/example
+docker push localhost:5000/hello
 ```
 
