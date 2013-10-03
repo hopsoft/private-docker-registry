@@ -26,7 +26,7 @@ vim assets/config.yml
 vagrant up
 vagrant ssh
 sudo su -
-docker build -t hopsoft/docker-registry /path/to/private-docker-registry
+docker build -t hopsoft/docker-registry /vagrant/private-docker-registry
 ```
 
 #### Run the registry
