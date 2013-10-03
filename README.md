@@ -64,7 +64,7 @@ docker commit 327db2da537e localhost:80/hello
 docker push localhost:80/hello
 ```
 
-#### Interact with the registry via the API
+#### Interact with the private registry via the API
 
 ```
 curl http://localhost/v1/repositories/hello/images
