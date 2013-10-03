@@ -31,6 +31,8 @@ docker build -t hopsoft/docker-registry /vagrant
 
 #### Run the registry
 
+_Note: The registry starts in prod mode. Be sure you have the correct settings in `assets/config.yml`_
+
 ```
 docker run -d -p 5000:5000 hopsoft/docker-registry /opt/private-docker-registry/start
 ```
