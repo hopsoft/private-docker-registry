@@ -9,4 +9,5 @@ if [[ ! -z $2 ]]; then port=$2; fi
 if [[ ! -z $3 ]]; then workers=$3; fi
 
 cd /opt/docker-registry
-SETTINGS_FLAVOR=$flavor gunicorn --access-logfile - --debug -k gevent -b 0.0.0.0:$port -w $workers wsgi:application
+#SETTINGS_FLAVOR=$flavor gunicorn --access-logfile - --debug -k gevent -b 0.0.0.0:$port -w $workers wsgi:application
+SETTINGS_FLAVOR=$flavor gunicorn -k gevent --max-requests 100 --graceful-timeout 3600 -t 3600 -b 0.0.0.0:$port -w $workers wsgi:application
