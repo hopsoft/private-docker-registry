@@ -1,6 +1,6 @@
 FROM ubuntu
 MAINTAINER Nathan Hopkins, natehop@gmail.com
 
-ADD assets /opt/private-docker-registry
-RUN /opt/private-docker-registry/install
+ADD assets /opt/hopsoft/docker-registry
+RUN /opt/hopsoft/docker-registry/install
 

@@ -34,16 +34,8 @@ docker build -t hopsoft/docker-registry /vagrant
 _Note: The registry starts in prod mode. Be sure you have the correct settings in `assets/config.yml`_
 
 ```
-docker run -d -p 5000:5000 hopsoft/docker-registry /opt/private-docker-registry/start
+docker run -d -p 5000:5000 hopsoft/docker-registry /opt/hopsoft/docker-registry/start
 ```
-
-#### Start Nginx to reverse proxy to the registry
-
-```
-/etc/init.d/nginx start
-```
-
-You can see the nginx config [here](https://github.com/hopsoft/private-docker-registry/blob/master/provision).
 
 #### Create an image
 
@@ -57,22 +49,22 @@ exit
 
 ```
 docker ps -a | grep ubuntu
-docker commit 327db2da537e localhost:80/hello
+docker commit 327db2da537e localhost:5000/hello
 ```
 
 #### Push the image to the private registry
 
 ```
-docker push localhost:80/hello
+docker push localhost:5000/hello
 ```
 
 #### Interact with the private registry via the API
 
 ```
-curl http://localhost/v1/repositories/hello/images
-curl http://localhost/v1/images/8dbd9e392a964056420e5d58ca5cc376ef18e2de93b5cc90e868a1bbc8318c1c/json
-curl http://localhost/v1/repositories/hello/tags
-curl -X DELETE http://localhost/v1/repositories/hello
+curl http://localhost:5000/v1/repositories/hello/images
+curl http://localhost:5000/v1/images/8dbd9e392a964056420e5d58ca5cc376ef18e2de93b5cc90e868a1bbc8318c1c/json
+curl http://localhost:5000/v1/repositories/hello/tags
+curl -X DELETE http://localhost:5000/v1/repositories/hello
 ```
 
 Read more about the API [here](http://docs.docker.io/en/latest/api/registry_index_spec/).

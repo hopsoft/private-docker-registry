@@ -1,24 +1,28 @@
 #!/bin/bash
 
-apt-get install -q -y --force-yes lsb-release
+apt-get install -y --force-yes lsb-release
 echo deb http://archive.ubuntu.com/ubuntu $(lsb_release -cs) main universe > /etc/apt/sources.list.d/universe.list
 echo deb http://get.docker.io/ubuntu docker main > /etc/apt/sources.list.d/docker.list
+apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 36A1D7869245C8950F966E92D8576A8BA88D21E9
 
 apt-get -qq update
-apt-get -y --force-yes install build-essential
-apt-get -y --force-yes install git
-apt-get -y --force-yes install vim
-apt-get -y --force-yes install lxc-docker
-apt-get -y --force-yes install python-dev
-apt-get -y --force-yes install libevent-dev
-apt-get -y --force-yes install python-pip
+apt-get -y --force-yes install \
+  build-essential \
+  git \
+  vim \
+  lxc-docker \
+  python-dev \
+  libevent-dev \
+  liblzma-dev \
+  python-pip
 
 echo $(ssh-keyscan -H github.com) >> /root/.ssh/known_hosts
 echo $(ssh-keyscan -H bitbucket.org) >> /root/.ssh/known_hosts
 
 git clone https://github.com/dotcloud/docker-registry.git /opt/docker-registry
 cd /opt/docker-registry
-git checkout 0.5.9
+git checkout 0.6.2
 pip install -r requirements.txt
-cp -fv /opt/private-docker-registry/config.yml /opt/docker-registry/config.yml
+cp -fv /opt/hopsoft/docker-registry/config.yml /opt/docker-registry/config/config.yml
+cp -fv /opt/hopsoft/docker-registry/config.yml /opt/docker-registry/config.yml
 
