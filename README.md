@@ -25,17 +25,17 @@ vim /opt/docker-registry/config/config.yml
 
 ```
 docker pull ubuntu
-docker tag localhost:5000/ubuntu
+docker tag ubuntu localhost:5000/ubuntu
 docker push localhost:5000/ubuntu
 ```
 
 ### Interact with the private registry via the API
 
 ```
-curl http://localhost:5000/v1/repositories/hello/images
+curl http://localhost:5000/v1/repositories/ubuntu/images
 curl http://localhost:5000/v1/images/8dbd9e392a964056420e5d58ca5cc376ef18e2de93b5cc90e868a1bbc8318c1c/json
-curl http://localhost:5000/v1/repositories/hello/tags
-curl -X DELETE http://localhost:5000/v1/repositories/hello
+curl http://localhost:5000/v1/repositories/ubuntu/tags
+curl -X DELETE http://localhost:5000/v1/repositories/ubuntu
 ```
 
 Read more about the API [here](http://docs.docker.io/en/latest/api/registry_index_spec/).
