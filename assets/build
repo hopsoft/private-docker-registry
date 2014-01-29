@@ -23,5 +23,5 @@ git clone https://github.com/dotcloud/docker-registry.git /opt/docker-registry
 cd /opt/docker-registry
 git checkout 0.6.5
 pip install -r requirements.txt
-cp -fv /opt/hopsoft/docker-registry/config.yml /opt/docker-registry/config/config.yml
+#cp -fv /opt/hopsoft/docker-registry/config.yml /opt/docker-registry/config/config.yml
 

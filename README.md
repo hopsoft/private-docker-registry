@@ -1,64 +1,35 @@
-# Private Docker Registry
+# Your Own Private Docker Registry
 
-A project to help you build a private docker-registry image.
+## Use the Trusted Image
 
-* [http://blog.docker.io/2013/07/how-to-use-your-own-registry/](http://blog.docker.io/2013/07/how-to-use-your-own-registry/)
-* [https://github.com/dotcloud/docker-registry/tree/0.5.9](https://github.com/dotcloud/docker-registry/tree/0.5.9)
-
-#### Get the project
-
-```
-git clone https://github.com/hopsoft/private-docker-registry.git
-cd private-docker-registry
-```
-
-#### Add your Docker registry configuration to assets
-
-An example: https://github.com/dotcloud/docker-registry/blob/0.5.9/config_sample.yml
+**Important:** When using S3,
+be sure to set the `boto_bucket` config value to your S3 bucket name;
+otherwise, the Django application won't start.
 
 ```
-vim assets/config.yml
+sudo docker run -i -t -p 5000:5000 hopsoft/docker-registry bash
+
+# update the config
+vim /opt/docker-registry/config/config.yml
+
+# run the registry
+/opt/hopsoft/docker-registry/start &
+
+# detach
+<CTL-P><CTL-Q>
 ```
 
-#### Build the image
+## Use the Registry
+
+### Create an Image
 
 ```
-vagrant up
-vagrant ssh
-sudo su -
-docker build -t hopsoft/docker-registry /vagrant
+docker pull ubuntu
+docker tag localhost:5000/ubuntu
+docker push localhost:5000/ubuntu
 ```
 
-#### Run the registry
-
-_Note: The registry starts in prod mode. Be sure you have the correct settings in `assets/config.yml`_
-
-```
-docker run -d -p 5000:5000 hopsoft/docker-registry /opt/hopsoft/docker-registry/start
-```
-
-#### Create an image
-
-```
-docker run -i -t ubuntu bash
-apt-get install hello
-exit
-```
-
-#### Tag the image into the private registry
-
-```
-docker ps -a | grep ubuntu
-docker commit 327db2da537e localhost:5000/hello
-```
-
-#### Push the image to the private registry
-
-```
-docker push localhost:5000/hello
-```
-
-#### Interact with the private registry via the API
+### Interact with the private registry via the API
 
 ```
 curl http://localhost:5000/v1/repositories/hello/images
@@ -69,5 +40,18 @@ curl -X DELETE http://localhost:5000/v1/repositories/hello
 
 Read more about the API [here](http://docs.docker.io/en/latest/api/registry_index_spec/).
 
-_Note: Delete repository doesn't seem to work._
+## Build the Image Manually
+
+#### Dependencies
+
+* [Virtual Box](https://www.virtualbox.org/)
+* [Vagrant](http://www.vagrantup.com/)
+
+```
+git clone git@github.com:hopsoft/private-docker-registry.git
+cd private-docker-registry
+vagrant up
+vagrant ssh
+sudo docker build -t hopsoft/docker-registry /vagrant
+```
 
